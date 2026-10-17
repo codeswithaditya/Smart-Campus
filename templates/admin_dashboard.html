@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Dashboard | Smart Campus</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+<div class="dashboard">
+
+    <!-- =========================
+         SIDEBAR
+    ========================== -->
+
+    <aside class="sidebar">
+
+        <div class="brand">
+            <div class="brand-logo">SC</div>
+            <span>Smart Campus</span>
+        </div>
+
+        <nav>
+
+            <a href="/admin/dashboard" class="active">
+                📊 Admin Dashboard
+            </a>
+
+            <a href="/admin/dashboard">
+                📋 All Complaints
+            </a>
+
+        </nav>
+
+        <a href="/logout" class="logout">
+            🚪 Logout
+        </a>
+
+    </aside>
+
+
+    <!-- =========================
+         MAIN CONTENT
+    ========================== -->
+
+    <main class="main-content">
+
+
+        <!-- Topbar -->
+
+        <header class="topbar">
+
+            <div>
+
+                <h1>Admin Dashboard</h1>
+
+                <p>
+                    Manage student complaints and campus services.
+                </p>
+
+            </div>
+
+
+            <div class="profile">
+
+                <div class="profile-avatar">
+                    A
+                </div>
+
+                <div>
+
+                    <strong>
+                        Administrator
+                    </strong>
+
+                    <small>
+                        Admin
+                    </small>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- =========================
+             WELCOME CARD
+        ========================== -->
+
+        <section class="welcome-card">
+
+            <div>
+
+                <p class="welcome-small">
+                    Welcome back 👋
+                </p>
+
+                <h2>
+                    Campus Administration
+                </h2>
+
+                <p>
+                    Review and manage student complaints from one place.
+                </p>
+
+            </div>
+
+
+            <div class="welcome-icon">
+                🏫
+            </div>
+
+        </section>
+
+
+
+        <!-- =========================
+             COMPLAINTS SECTION
+        ========================== -->
+
+        <section class="content-card">
+
+
+            <div class="section-header">
+
+                <div>
+
+                    <h2>
+                        All Student Complaints
+                    </h2>
+
+                    <p>
+                        Review and manage complaints submitted by students.
+                    </p>
+
+                </div>
+
+
+                <span class="admin-count">
+
+                    {{ complaints|length }} Complaints
+
+                </span>
+
+            </div>
+
+
+
+            {% if complaints %}
+
+
+            <!-- Complaints Table -->
+
+            <div class="complaints-table-wrapper">
+
+                <table class="complaints-table">
+
+
+                    <!-- TABLE HEADER -->
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                ID
+                            </th>
+
+                            <th>
+                                Student
+                            </th>
+
+                            <th>
+                                Complaint
+                            </th>
+
+                            <th>
+                                Category
+                            </th>
+
+                            <th>
+                                Priority
+                            </th>
+
+                            <th>
+                                Status
+                            </th>
+
+                            <th>
+                                Date
+                            </th>
+
+                            <th>
+                                Action
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+
+                    <!-- TABLE BODY -->
+
+                    <tbody>
+
+
+                    {% for complaint in complaints %}
+
+
+                        <tr>
+
+
+                            <!-- Complaint ID -->
+
+                            <td>
+
+                                #{{ complaint.complaint_id }}
+
+                            </td>
+
+
+
+                            <!-- Student -->
+
+                            <td>
+
+                                <strong>
+                                    {{ complaint.student_name }}
+                                </strong>
+
+                                <span class="complaint-description">
+
+                                    {{ complaint.student_email }}
+
+                                </span>
+
+                            </td>
+
+
+
+                            <!-- Complaint -->
+
+                            <td>
+
+                                <strong>
+                                    {{ complaint.title }}
+                                </strong>
+
+                                <span class="complaint-description">
+
+                                    {{ complaint.description }}
+
+                                </span>
+
+                            </td>
+
+
+
+                            <!-- Category -->
+
+                            <td>
+
+                                {{ complaint.category_name }}
+
+                            </td>
+
+
+
+                            <!-- Priority -->
+
+                            <td>
+
+                                <span class="priority
+                                priority-{{ complaint.priority|lower }}">
+
+                                    {{ complaint.priority }}
+
+                                </span>
+
+                            </td>
+
+
+
+                            <!-- Status -->
+
+                            <td>
+
+                                <span class="status
+                                status-{{ complaint.status|lower|replace(' ', '-') }}">
+
+                                    {{ complaint.status }}
+
+                                </span>
+
+                            </td>
+
+
+
+                            <!-- Date -->
+
+                            <td>
+
+                                {{ complaint.created_at.strftime('%d %b %Y') }}
+
+                            </td>
+
+
+
+                            <!-- ACTION -->
+
+                            <td>
+
+                                <form
+                                    method="POST"
+                                    action="/admin/complaint/update/{{ complaint.complaint_id }}"
+                                    class="admin-update-form"
+                                >
+
+
+                                    <!-- Status -->
+
+                                    <select
+                                        name="status"
+                                        required
+                                    >
+
+                                        <option
+                                            value="Pending"
+                                            {% if complaint.status == "Pending" %}
+                                            selected
+                                            {% endif %}
+                                        >
+                                            Pending
+                                        </option>
+
+
+                                        <option
+                                            value="In Progress"
+                                            {% if complaint.status == "In Progress" %}
+                                            selected
+                                            {% endif %}
+                                        >
+                                            In Progress
+                                        </option>
+
+
+                                        <option
+                                            value="Resolved"
+                                            {% if complaint.status == "Resolved" %}
+                                            selected
+                                            {% endif %}
+                                        >
+                                            Resolved
+                                        </option>
+
+                                    </select>
+
+
+
+                                    <!-- Admin Remark -->
+
+                                    <input
+                                        type="text"
+                                        name="remark"
+                                        placeholder="Add remark..."
+                                        required
+                                    >
+
+
+
+                                    <!-- Update Button -->
+
+                                    <button
+                                        type="submit"
+                                        class="update-btn"
+                                    >
+                                        Update
+                                    </button>
+
+
+                                </form>
+
+                            </td>
+
+
+                        </tr>
+
+
+                    {% endfor %}
+
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+            {% else %}
+
+
+            <!-- =========================
+                 EMPTY STATE
+            ========================== -->
+
+            <div class="empty-state">
+
+                <div class="empty-icon">
+                    📭
+                </div>
+
+                <h3>
+                    No complaints found
+                </h3>
+
+                <p>
+                    There are currently no student complaints.
+                </p>
+
+            </div>
+
+
+            {% endif %}
+
+
+        </section>
+
+
+    </main>
+
+
+</div>
+
+
+</body>
+
+</html>

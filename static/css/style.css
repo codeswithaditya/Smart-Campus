@@ -1,0 +1,1532 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f7fb;
+    min-height: 100vh;
+}
+
+.auth-container {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.auth-card {
+    width: 100%;
+    max-width: 430px;
+    background: white;
+    padding: 40px;
+    border-radius: 18px;
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.08);
+}
+
+.logo {
+    width: 55px;
+    height: 55px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    border-radius: 14px;
+    background: #111827;
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+h1 {
+    text-align: center;
+    color: #111827;
+    margin-bottom: 8px;
+}
+
+.subtitle {
+    text-align: center;
+    color: #6b7280;
+    margin-bottom: 30px;
+    font-size: 14px;
+}
+
+.input-group {
+    margin-bottom: 20px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 7px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #374151;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 13px 14px;
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+    font-size: 15px;
+    outline: none;
+}
+
+.input-group input:focus {
+    border-color: #111827;
+}
+
+button {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 10px;
+    background: #111827;
+    color: white;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+button:hover {
+    opacity: 0.9;
+}
+
+.bottom-text {
+    text-align: center;
+    margin-top: 22px;
+    font-size: 14px;
+    color: #6b7280;
+}
+
+.bottom-text a {
+    color: #111827;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+/* =========================
+   SMART CAMPUS DASHBOARD
+========================= */
+
+.dashboard {
+    min-height: 100vh;
+    display: flex;
+    background: #f5f7fb;
+}
+
+/* Sidebar */
+
+.sidebar {
+    width: 250px;
+    min-height: 100vh;
+    background: #111827;
+    color: white;
+    padding: 25px 18px;
+    display: flex;
+    flex-direction: column;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0 10px;
+    margin-bottom: 45px;
+    font-weight: bold;
+}
+
+.brand-logo {
+    width: 42px;
+    height: 42px;
+    background: white;
+    color: #111827;
+    border-radius: 11px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sidebar nav {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.sidebar nav a,
+.logout {
+    color: #d1d5db;
+    text-decoration: none;
+    padding: 13px 14px;
+    border-radius: 9px;
+    font-size: 14px;
+}
+
+.sidebar nav a:hover,
+.sidebar nav a.active {
+    background: #1f2937;
+    color: white;
+}
+
+.logout {
+    margin-top: auto;
+}
+
+/* Main */
+
+.main-content {
+    flex: 1;
+    padding: 35px 45px;
+}
+
+/* Topbar */
+
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.topbar h1 {
+    text-align: left;
+    margin-bottom: 5px;
+}
+
+.topbar p {
+    color: #6b7280;
+    font-size: 14px;
+}
+
+.profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.profile-avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: #111827;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+.profile small {
+    display: block;
+    color: #6b7280;
+    margin-top: 3px;
+}
+
+/* Welcome Card */
+
+.welcome-card {
+    background: #111827;
+    color: white;
+    border-radius: 18px;
+    padding: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.welcome-small {
+    opacity: 0.7;
+    margin-bottom: 8px;
+}
+
+.welcome-card h2 {
+    font-size: 28px;
+    margin-bottom: 8px;
+}
+
+.welcome-card p {
+    color: #d1d5db;
+}
+
+.welcome-icon {
+    font-size: 70px;
+}
+
+.primary-btn,
+.secondary-btn {
+    display: inline-block;
+    text-decoration: none;
+    padding: 11px 17px;
+    border-radius: 8px;
+    margin-top: 20px;
+    font-size: 14px;
+    font-weight: 600;
+    color: white;
+}
+
+.primary-btn {
+    background: white;
+    color: #111827;
+}
+
+.secondary-btn {
+    background: #111827;
+    color: white;
+}
+
+/* Statistics */
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    margin-bottom: 25px;
+}
+
+.stat-card {
+    background: white;
+    border-radius: 14px;
+    padding: 22px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+}
+
+.stat-icon {
+    font-size: 25px;
+}
+
+.stat-card span {
+    color: #6b7280;
+    font-size: 13px;
+}
+
+.stat-card h3 {
+    font-size: 24px;
+    margin-top: 5px;
+}
+
+/* Content Card */
+
+.content-card {
+    background: white;
+    border-radius: 16px;
+    padding: 25px;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.section-header h2 {
+    margin-bottom: 5px;
+}
+
+.section-header p {
+    color: #6b7280;
+    font-size: 13px;
+}
+
+.section-header a {
+    color: #111827;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 55px 20px;
+    color: #6b7280;
+}
+
+.empty-icon {
+    font-size: 40px;
+    margin-bottom: 12px;
+}
+
+.empty-state h3 {
+    color: #111827;
+    margin-bottom: 7px;
+}
+
+
+/* Responsive */
+
+@media (max-width: 900px) {
+
+    .sidebar {
+        width: 210px;
+    }
+
+    .stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 650px) {
+
+    .dashboard {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        min-height: auto;
+    }
+
+    .sidebar nav {
+        flex-direction: row;
+        overflow-x: auto;
+    }
+
+    .logout {
+        margin-top: 15px;
+    }
+
+    .main-content {
+        padding: 20px;
+    }
+
+    .stats {
+        grid-template-columns: 1fr;
+    }
+
+    .topbar {
+        align-items: flex-start;
+        gap: 20px;
+    }
+}
+
+/* =========================
+   NEW COMPLAINT FORM
+========================= */
+
+.complaint-form-card {
+    background: white;
+    border-radius: 16px;
+    padding: 32px;
+    max-width: 900px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+}
+
+.form-heading {
+    margin-bottom: 30px;
+}
+
+.form-heading h2 {
+    color: #111827;
+    margin-bottom: 7px;
+}
+
+.form-heading p {
+    color: #6b7280;
+    font-size: 14px;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.form-group {
+    margin-bottom: 22px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #374151;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 13px 14px;
+    border: 1px solid #d1d5db;
+    border-radius: 9px;
+    font-size: 14px;
+    font-family: Arial, sans-serif;
+    outline: none;
+    background: white;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: #111827;
+}
+
+.form-group textarea {
+    resize: vertical;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 10px;
+}
+
+.cancel-btn,
+.submit-complaint-btn {
+    padding: 12px 20px;
+    border-radius: 9px;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.cancel-btn {
+    background: #f3f4f6;
+    color: #374151;
+}
+
+.submit-complaint-btn {
+    width: auto;
+    background: #111827;
+    color: white;
+    border: none;
+}
+
+.cancel-btn:hover,
+.submit-complaint-btn:hover {
+    opacity: 0.9;
+}
+
+
+/* Mobile */
+
+@media (max-width: 650px) {
+
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+
+    .complaint-form-card {
+        padding: 22px;
+    }
+
+    .form-actions {
+        flex-direction: column;
+    }
+
+    .cancel-btn,
+    .submit-complaint-btn {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+/* =========================
+   MY COMPLAINTS
+========================= */
+
+.complaints-card {
+    overflow: hidden;
+}
+
+.new-complaint-link {
+    display: inline-block;
+    background: #111827;
+    color: white !important;
+    padding: 10px 16px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.complaints-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    margin-top: 25px;
+}
+
+.complaints-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 850px;
+}
+
+.complaints-table th {
+    text-align: left;
+    padding: 14px 12px;
+    background: #f9fafb;
+    color: #6b7280;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+}
+
+.complaints-table td {
+    padding: 17px 12px;
+    border-bottom: 1px solid #eef0f3;
+    color: #374151;
+    font-size: 13px;
+    vertical-align: middle;
+}
+
+.complaints-table td strong {
+    display: block;
+    color: #111827;
+    margin-bottom: 5px;
+}
+
+.complaint-description {
+    display: block;
+    max-width: 230px;
+    color: #9ca3af;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.priority,
+.status {
+    display: inline-block;
+    padding: 6px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.priority-low {
+    background: #f3f4f6;
+    color: #374151;
+}
+
+.priority-medium {
+    background: #fff7ed;
+    color: #c2410c;
+}
+
+.priority-high {
+    background: #fef2f2;
+    color: #dc2626;
+}
+
+.status-pending {
+    background: #fff7ed;
+    color: #c2410c;
+}
+
+.status-in-progress {
+    background: #eff6ff;
+    color: #2563eb;
+}
+
+.status-resolved {
+    background: #ecfdf5;
+    color: #059669;
+}
+
+.complaints-table tbody tr:hover {
+    background: #fafafa;
+}
+
+@media (max-width: 650px) {
+
+    .new-complaint-link {
+        padding: 9px 12px;
+    }
+
+    .section-header {
+        align-items: flex-start;
+        gap: 15px;
+    }
+}
+
+/* =========================
+   ADMIN DASHBOARD
+========================= */
+
+.admin-count {
+    background: #f3f4f6;
+    color: #374151;
+    padding: 8px 13px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.admin-count {
+    white-space: nowrap;
+}
+/* =========================
+   ADMIN COMPLAINT UPDATE
+========================= */
+
+.admin-update-form {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    min-width: 180px;
+}
+
+.admin-update-form select,
+.admin-update-form input {
+    padding: 8px 9px;
+    border: 1px solid #d1d5db;
+    border-radius: 7px;
+    font-size: 12px;
+    outline: none;
+}
+
+.admin-update-form select:focus,
+.admin-update-form input:focus {
+    border-color: #111827;
+}
+
+.update-btn {
+    width: 100%;
+    padding: 8px;
+    border: none;
+    border-radius: 7px;
+    background: #111827;
+    color: white;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.update-btn:hover {
+    opacity: 0.9;
+}
+
+.admin-count {
+    background: #f3f4f6;
+    color: #374151;
+    padding: 8px 13px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+/* =========================
+   STUDENT COMPLAINTS
+========================= */
+
+.student-complaints {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    margin-top: 25px;
+}
+
+.student-complaint-card {
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    padding: 22px;
+    background: #ffffff;
+}
+
+.student-complaint-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+.complaint-id {
+    display: block;
+    color: #6b7280;
+    font-size: 12px;
+    margin-bottom: 6px;
+}
+
+.student-complaint-header h3 {
+    font-size: 18px;
+    color: #111827;
+}
+
+.student-description {
+    color: #6b7280;
+    font-size: 14px;
+    line-height: 1.6;
+    margin: 15px 0;
+}
+
+.complaint-details {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    padding: 15px 0;
+    border-top: 1px solid #e5e7eb;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.complaint-details div {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.complaint-details span {
+    color: #6b7280;
+    font-size: 12px;
+}
+
+.complaint-details strong {
+    color: #111827;
+    font-size: 13px;
+}
+
+.admin-remark {
+    margin-top: 15px;
+    padding: 14px;
+    background: #f5f7fb;
+    border-radius: 10px;
+}
+
+.admin-remark strong {
+    font-size: 13px;
+    color: #111827;
+}
+
+.admin-remark p {
+    margin-top: 7px;
+    color: #4b5563;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.admin-remark .no-remark {
+    color: #9ca3af;
+    font-style: italic;
+}
+
+
+/* Mobile */
+
+@media (max-width: 650px) {
+
+    .complaint-details {
+        grid-template-columns: 1fr;
+    }
+
+    .student-complaint-header {
+        flex-direction: column;
+    }
+
+}
+
+.section-header .secondary-btn{
+    color: white;
+}
+
+/* =========================================
+   SMART CAMPUS — PREMIUM UI OVERRIDE
+   Paste at the END of style.css
+========================================= */
+
+:root {
+    --sc-bg: #f4f6fc;
+    --sc-surface: #ffffff;
+    --sc-ink: #172033;
+    --sc-muted: #778198;
+    --sc-border: #e7eaf3;
+    --sc-primary: #635bff;
+    --sc-primary-dark: #4f46e5;
+    --sc-navy: #11162a;
+    --sc-cyan: #23c9d7;
+    --sc-shadow: 0 12px 35px rgba(24, 34, 70, 0.07);
+}
+
+/* Overall page */
+body {
+    font-family: "Inter", "Segoe UI", Arial, sans-serif;
+    background:
+        radial-gradient(circle at 85% 0%, rgba(99, 91, 255, 0.08), transparent 28%),
+        var(--sc-bg);
+    color: var(--sc-ink);
+    line-height: 1.5;
+}
+
+/* Dashboard shell */
+.dashboard {
+    background: transparent;
+}
+
+/* Sidebar — deep navy */
+.sidebar {
+    background: linear-gradient(180deg, #171b34 0%, #101426 100%);
+    color: #f8faff;
+    width: 258px;
+    padding: 28px 18px;
+    box-shadow: 8px 0 30px rgba(16, 20, 38, 0.08);
+}
+
+.brand {
+    margin-bottom: 38px;
+    padding: 0 8px;
+    font-size: 17px;
+    letter-spacing: -0.3px;
+}
+
+.brand-logo {
+    background: linear-gradient(135deg, var(--sc-primary), var(--sc-cyan));
+    color: white;
+    border-radius: 13px;
+    box-shadow: 0 7px 18px rgba(99, 91, 255, 0.28);
+}
+
+.sidebar nav {
+    gap: 7px;
+}
+
+.sidebar nav a,
+.logout {
+    color: #aeb7d0;
+    border: 1px solid transparent;
+    border-radius: 12px;
+    padding: 13px 14px;
+    transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.sidebar nav a:hover,
+.sidebar nav a.active {
+    color: #fff;
+    background: linear-gradient(100deg, rgba(99, 91, 255, 0.24), rgba(35, 201, 215, 0.08));
+    border-color: rgba(147, 153, 255, 0.17);
+    transform: translateX(2px);
+}
+
+.logout:hover {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.07);
+}
+
+/* Main area and page header */
+.main-content {
+    padding: 36px clamp(20px, 4vw, 52px);
+    min-width: 0;
+}
+
+.topbar {
+    margin-bottom: 28px;
+}
+
+.topbar h1 {
+    color: var(--sc-ink);
+    font-size: clamp(24px, 2.2vw, 32px);
+    font-weight: 750;
+    letter-spacing: -1px;
+}
+
+.topbar p,
+.profile small {
+    color: var(--sc-muted);
+}
+
+.profile-avatar {
+    background: linear-gradient(135deg, var(--sc-primary), #8b5cf6);
+    box-shadow: 0 5px 15px rgba(99, 91, 255, 0.2);
+}
+
+/* Welcome / hero panel */
+.welcome-card {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    background:
+        radial-gradient(circle at 85% 20%, rgba(35, 201, 215, 0.24), transparent 26%),
+        linear-gradient(115deg, #191d3a 0%, #343078 58%, #5148b9 100%);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 24px;
+    padding: clamp(25px, 4vw, 38px);
+    margin-bottom: 28px;
+    box-shadow: 0 18px 40px rgba(50, 46, 120, 0.17);
+}
+
+.welcome-card::after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    width: 230px;
+    height: 230px;
+    right: -65px;
+    bottom: -120px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 50%;
+    box-shadow:
+        0 0 0 25px rgba(255, 255, 255, 0.035),
+        0 0 0 55px rgba(255, 255, 255, 0.025);
+}
+
+.welcome-card h2 {
+    font-size: clamp(23px, 2.5vw, 32px);
+    letter-spacing: -0.8px;
+}
+
+.welcome-small {
+    color: #c9caff;
+    font-size: 13px;
+    font-weight: 650;
+    text-transform: uppercase;
+    letter-spacing: 1.3px;
+}
+
+.welcome-card p {
+    color: #e0e2ff;
+}
+
+.welcome-icon {
+    opacity: 0.9;
+    filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.16));
+}
+
+/* Buttons */
+.primary-btn,
+.secondary-btn,
+.new-complaint-link,
+.submit-complaint-btn,
+.update-btn {
+    border: 0;
+    border-radius: 11px;
+    font-weight: 700;
+    transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+}
+
+.primary-btn {
+    background: #fff;
+    color: #3730a3;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.12);
+}
+
+.secondary-btn,
+.new-complaint-link,
+.submit-complaint-btn,
+.update-btn {
+    background: linear-gradient(135deg, var(--sc-primary), #8277ff);
+    color: #fff !important;
+    box-shadow: 0 6px 15px rgba(99, 91, 255, 0.19);
+}
+
+.primary-btn:hover,
+.secondary-btn:hover,
+.new-complaint-link:hover,
+.submit-complaint-btn:hover,
+.update-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 9px 22px rgba(99, 91, 255, 0.23);
+    opacity: 1;
+}
+
+/* Dashboard stat cards */
+.stats {
+    gap: 20px;
+}
+
+.stat-card {
+    position: relative;
+    overflow: hidden;
+    background: var(--sc-surface);
+    border: 1px solid var(--sc-border);
+    border-radius: 18px;
+    padding: 24px;
+    box-shadow: var(--sc-shadow);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 17px 38px rgba(24, 34, 70, 0.11);
+}
+
+.stat-card span {
+    color: var(--sc-muted);
+    font-weight: 600;
+}
+
+.stat-card h3 {
+    color: var(--sc-ink);
+    font-size: 30px;
+    letter-spacing: -0.8px;
+}
+
+.stat-icon {
+    display: grid;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    flex-shrink: 0;
+    border-radius: 14px;
+    background: #eeedff;
+}
+
+/* Content panels */
+.content-card,
+.complaint-form-card {
+    background: rgba(255, 255, 255, 0.96);
+    border: 1px solid var(--sc-border);
+    border-radius: 20px;
+    padding: clamp(20px, 3vw, 30px);
+    box-shadow: var(--sc-shadow);
+}
+
+.section-header {
+    gap: 18px;
+    margin-bottom: 8px;
+}
+
+.section-header h2,
+.form-heading h2 {
+    color: var(--sc-ink);
+    font-size: 21px;
+    font-weight: 750;
+    letter-spacing: -0.5px;
+}
+
+.section-header p,
+.form-heading p {
+    color: var(--sc-muted);
+}
+
+.section-header a {
+    color: var(--sc-primary-dark);
+}
+
+/* Tables — polished and scroll-friendly */
+.complaints-table-wrapper {
+    border: 1px solid var(--sc-border);
+    border-radius: 15px;
+    margin-top: 22px;
+}
+
+.complaints-table {
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.complaints-table th {
+    background: #f7f8fc;
+    color: #707990;
+    padding: 16px 14px;
+    font-size: 11px;
+    letter-spacing: 0.8px;
+    border-bottom: 1px solid var(--sc-border);
+}
+
+.complaints-table td {
+    padding: 17px 14px;
+    border-bottom: 1px solid #edf0f6;
+    color: #475069;
+}
+
+.complaints-table tbody tr {
+    transition: background 0.15s ease;
+}
+
+.complaints-table tbody tr:hover {
+    background: #f8f8ff;
+}
+
+.complaints-table tbody tr:last-child td {
+    border-bottom: 0;
+}
+
+.complaints-table td strong {
+    color: #202842;
+}
+
+/* Status / priority pills */
+.priority,
+.status {
+    padding: 6px 11px;
+    border-radius: 8px;
+    font-size: 11px;
+    font-weight: 750;
+    letter-spacing: 0.15px;
+}
+
+.priority-low {
+    background: #edf1f7;
+    color: #526078;
+}
+
+.priority-medium {
+    background: #fff3dc;
+    color: #a45b00;
+}
+
+.priority-high {
+    background: #ffe8ec;
+    color: #c02e4e;
+}
+
+.status-pending {
+    background: #fff3dc;
+    color: #a45b00;
+}
+
+.status-in-progress {
+    background: #e8edff;
+    color: #4c52c8;
+}
+
+.status-resolved {
+    background: #e0f8ef;
+    color: #087b58;
+}
+
+.admin-count {
+    background: #eeedff;
+    color: #5148c7;
+    border: 1px solid #dedbff;
+    border-radius: 10px;
+    padding: 9px 13px;
+    font-weight: 750;
+}
+
+/* Admin action controls */
+.admin-update-form {
+    min-width: 190px;
+    gap: 8px;
+}
+
+.admin-update-form select,
+.admin-update-form input,
+.form-group input,
+.form-group select,
+.form-group textarea,
+.input-group input {
+    background: #fbfcff;
+    border: 1px solid #dfe4ef;
+    border-radius: 11px;
+    color: #202842;
+    transition: border-color 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+}
+
+.admin-update-form select,
+.admin-update-form input {
+    padding: 10px 11px;
+}
+
+.admin-update-form select:focus,
+.admin-update-form input:focus,
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus,
+.input-group input:focus {
+    border-color: var(--sc-primary);
+    background: #fff;
+    box-shadow: 0 0 0 4px rgba(99, 91, 255, 0.11);
+    outline: none;
+}
+
+.update-btn {
+    padding: 10px 12px;
+}
+
+/* Student complaint cards */
+.student-complaint-card {
+    border: 1px solid var(--sc-border);
+    border-radius: 17px;
+    box-shadow: 0 6px 20px rgba(24, 34, 70, 0.04);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.student-complaint-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--sc-shadow);
+}
+
+.student-complaint-header h3 {
+    color: var(--sc-ink);
+}
+
+.complaint-details {
+    border-color: var(--sc-border);
+}
+
+.admin-remark {
+    background: #f5f5ff;
+    border: 1px solid #e7e5ff;
+    border-radius: 12px;
+}
+
+/* Authentication pages */
+.auth-container {
+    position: relative;
+    overflow: hidden;
+    background:
+        radial-gradient(circle at 15% 15%, rgba(35, 201, 215, 0.15), transparent 28%),
+        radial-gradient(circle at 85% 80%, rgba(99, 91, 255, 0.2), transparent 30%),
+        linear-gradient(135deg, #11162a, #252653 55%, #373078);
+}
+
+.auth-card {
+    background: rgba(255, 255, 255, 0.97);
+    border: 1px solid rgba(255, 255, 255, 0.45);
+    border-radius: 24px;
+    padding: clamp(28px, 5vw, 42px);
+    box-shadow: 0 25px 75px rgba(5, 8, 25, 0.25);
+}
+
+.auth-card .logo {
+    background: linear-gradient(135deg, var(--sc-primary), var(--sc-cyan));
+    border-radius: 16px;
+    box-shadow: 0 9px 22px rgba(99, 91, 255, 0.22);
+}
+
+.auth-card h1 {
+    color: var(--sc-ink);
+    font-weight: 800;
+    letter-spacing: -0.8px;
+}
+
+.auth-card .subtitle {
+    color: var(--sc-muted);
+}
+
+.input-group label,
+.form-group label {
+    color: #39435b;
+    font-weight: 700;
+}
+
+.auth-card button {
+    background: linear-gradient(135deg, var(--sc-primary), #8277ff);
+    border-radius: 11px;
+    box-shadow: 0 8px 18px rgba(99, 91, 255, 0.2);
+}
+
+.auth-card button:hover {
+    opacity: 1;
+    transform: translateY(-1px);
+}
+
+.bottom-text a {
+    color: var(--sc-primary-dark);
+}
+
+/* Empty state */
+.empty-state {
+    padding: 65px 20px;
+}
+
+.empty-state h3 {
+    color: var(--sc-ink);
+}
+
+.empty-icon {
+    display: inline-grid;
+    place-items: center;
+    width: 70px;
+    height: 70px;
+    background: #eeedff;
+    border-radius: 22px;
+}
+
+/* Responsive refinements */
+@media (max-width: 900px) {
+    .sidebar {
+        width: 220px;
+    }
+
+    .main-content {
+        padding: 28px 24px;
+    }
+}
+
+@media (max-width: 650px) {
+    .sidebar {
+        padding: 18px 14px;
+    }
+
+    .brand {
+        margin-bottom: 20px;
+    }
+
+    .sidebar nav a {
+        white-space: nowrap;
+        font-size: 12px;
+        padding: 10px 12px;
+    }
+
+    .main-content {
+        padding: 20px 14px;
+    }
+
+    .topbar {
+        flex-wrap: wrap;
+    }
+
+    .welcome-card {
+        border-radius: 18px;
+    }
+
+    .welcome-icon {
+        font-size: 48px;
+    }
+
+    .content-card,
+    .complaint-form-card {
+        border-radius: 16px;
+        padding: 18px;
+    }
+
+    .section-header {
+        flex-wrap: wrap;
+    }
+
+    .stats {
+        gap: 12px;
+    }
+
+    .stat-card {
+        padding: 18px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+    }
+}
+
+/* ==============================
+SMART CAMPUS - MOBILE RESPONSIVE
+Paste at the END of style.css
+============================== */
+@media (max-width: 768px) {
+/* Main layout */
+.dashboard {
+display: flex;
+flex-direction: column;
+min-height: 100vh;
+}
+/* Sidebar becomes a compact top navigation */
+.sidebar {
+position: relative;
+width: 100%;
+min-width: 0;
+height: auto;
+min-height: 0;
+padding: 14px;
+box-sizing: border-box;
+}
+.sidebar .brand {
+margin-bottom: 12px;
+}
+.sidebar nav,
+.sidebar .nav-links {
+display: flex;
+flex-wrap: wrap;
+gap: 8px;
+}
+.sidebar a {
+padding: 10px 12px;
+white-space: normal;
+}
+/* Main content uses full phone width */
+.main-content {
+width: 100%;
+min-width: 0;
+margin: 0;
+padding: 18px 14px;
+box-sizing: border-box;
+}
+/* Header/profile area */
+.topbar {
+flex-wrap: wrap;
+gap: 12px;
+}
+.topbar h1,
+.main-content h1 {
+font-size: 1.65rem;
+line-height: 1.25;
+}
+/* Welcome banner */
+.welcome-card {
+padding: 24px 20px;
+min-height: auto;
+box-sizing: border-box;
+}
+.welcome-card h2 {
+font-size: 1.6rem;
+}
+/* Dashboard stats */
+.stats {
+display: grid;
+grid-template-columns: repeat(2, minmax(0, 1fr));
+gap: 12px;
+}
+.stat-card {
+min-width: 0;
+padding: 16px;
+box-sizing: border-box;
+}
+/* Cards and forms */
+.content-card,
+.card {
+max-width: 100%;
+min-width: 0;
+padding: 18px 14px;
+box-sizing: border-box;
+}
+input,
+select,
+textarea,
+button {
+max-width: 100%;
+box-sizing: border-box;
+}
+/* Tables: allow horizontal scrolling instead of squeezing columns */
+.complaints-table,
+.content-card table {
+display: block;
+width: 100%;
+overflow-x: auto;
+white-space: nowrap;
+-webkit-overflow-scrolling: touch;
+}
+.complaints-table table,
+.content-card table table {
+min-width: 650px;
+}
+}
+/* Smaller phones */
+@media (max-width: 480px) {
+.main-content {
+padding: 14px 10px;
+}
+.stats {
+grid-template-columns: 1fr;
+}
+.welcome-card {
+padding: 20px 16px;
+border-radius: 18px;
+}
+.welcome-card h2 {
+font-size: 1.4rem;
+}
+.topbar h1,
+.main-content h1 {
+font-size: 1.45rem;
+}
+.sidebar {
+padding: 12px 10px;
+}
+.sidebar a {
+font-size: 0.9rem;
+padding: 9px 10px;
+}
+}

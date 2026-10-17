@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>New Complaint | Smart Campus</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+    <div class="dashboard">
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+
+            <div class="brand">
+                <div class="brand-logo">SC</div>
+                <span>Smart Campus</span>
+            </div>
+
+            <nav>
+                <a href="/dashboard">🏠 Dashboard</a>
+                <a href="/complaint/new" class="active">➕ New Complaint</a>
+                <a href="#">📝 My Complaints</a>
+                <a href="#">🔔 Notifications</a>
+            </nav>
+
+            <a href="/logout" class="logout">🚪 Logout</a>
+
+        </aside>
+
+
+        <!-- Main Content -->
+        <main class="main-content">
+
+            <header class="topbar">
+                <div>
+                    <h1>New Complaint</h1>
+                    <p>Submit a complaint about any campus service.</p>
+                </div>
+
+                <div class="profile">
+                    <div class="profile-avatar">
+                        {{ session["student_name"][0]|upper }}
+                    </div>
+
+                    <div>
+                        <strong>{{ session["student_name"] }}</strong>
+                        <small>Student</small>
+                    </div>
+                </div>
+            </header>
+
+
+            <!-- Complaint Form -->
+            <section class="complaint-form-card">
+
+                <div class="form-heading">
+                    <h2>Submit Your Complaint</h2>
+                    <p>Please provide accurate information so the issue can be resolved quickly.</p>
+                </div>
+
+
+                <form method="POST">
+
+                    <!-- Category -->
+                    <div class="form-row">
+
+                        <div class="form-group">
+
+                            <label for="category_id">
+                                Complaint Category
+                            </label>
+
+                            <select id="category_id"
+                                    name="category_id"
+                                    required>
+
+                                <option value="">
+                                    Select a category
+                                </option>
+
+                                {% for category in categories %}
+
+                                <option value="{{ category.category_id }}">
+                                    {{ category.category_name }}
+                                </option>
+
+                                {% endfor %}
+
+                            </select>
+
+                        </div>
+
+
+                        <!-- Priority -->
+                        <div class="form-group">
+
+                            <label for="priority">
+                                Priority
+                            </label>
+
+                            <select id="priority"
+                                    name="priority"
+                                    required>
+
+                                <option value="Low">
+                                    Low
+                                </option>
+
+                                <option value="Medium" selected>
+                                    Medium
+                                </option>
+
+                                <option value="High">
+                                    High
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Title -->
+                    <div class="form-group">
+
+                        <label for="title">
+                            Complaint Title
+                        </label>
+
+                        <input type="text"
+                               id="title"
+                               name="title"
+                               placeholder="Example: Wi-Fi not working in Computer Lab"
+                               maxlength="150"
+                               required>
+
+                    </div>
+
+
+                    <!-- Description -->
+                    <div class="form-group">
+
+                        <label for="description">
+                            Description
+                        </label>
+
+                        <textarea id="description"
+                                  name="description"
+                                  rows="7"
+                                  placeholder="Describe the problem in detail..."
+                                  required></textarea>
+
+                    </div>
+
+
+                    <!-- Buttons -->
+                    <div class="form-actions">
+
+                        <a href="/dashboard"
+                           class="cancel-btn">
+                            Cancel
+                        </a>
+
+                        <button type="submit"
+                                class="submit-complaint-btn">
+                            Submit Complaint
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </section>
+
+        </main>
+
+    </div>
+
+</body>
+
+</html>

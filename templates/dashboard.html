@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard | Smart Campus</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+    <div class="dashboard">
+
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="brand-logo">SC</div>
+                <span>Smart Campus</span>
+            </div>
+
+            <nav>
+                <a href="{{ url_for('dashboard') }}" class="active">🏠 Dashboard</a>
+                <a href="{{ url_for('my_complaints') }}">📋 My Complaints</a>
+                <a href="{{ url_for('new_complaint') }}">➕ New Complaint</a>
+            </nav>
+
+            <a href="{{ url_for('logout') }}" class="logout">🚪 Logout</a>
+        </aside>
+
+        <main class="main-content">
+
+            <header class="topbar">
+                <div>
+                    <h1>Dashboard</h1>
+                    <p>Manage your campus services and complaints.</p>
+                </div>
+
+                <div class="profile">
+                    <div class="profile-avatar">{{ name[0]|upper }}</div>
+                    <div>
+                        <strong>{{ name }}</strong>
+                        <small>Student</small>
+                    </div>
+                </div>
+            </header>
+
+            <section class="welcome-card">
+                <div>
+                    <p class="welcome-small">Welcome back 👋</p>
+                    <h2>{{ name }}</h2>
+                    <p>Submit and track your campus complaints easily.</p>
+
+                    <a href="{{ url_for('new_complaint') }}" class="primary-btn">
+                        + Submit Complaint
+                    </a>
+                </div>
+
+                <div class="welcome-icon">🏫</div>
+            </section>
+
+            <section class="stats">
+
+                <div class="stat-card">
+                    <div class="stat-icon">📋</div>
+                    <div>
+                        <span>Total Complaints</span>
+                        <h3>{{ total }}</h3>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">⏳</div>
+                    <div>
+                        <span>Pending</span>
+                        <h3>{{ pending }}</h3>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">🔄</div>
+                    <div>
+                        <span>In Progress</span>
+                        <h3>{{ in_progress }}</h3>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">✅</div>
+                    <div>
+                        <span>Resolved</span>
+                        <h3>{{ resolved }}</h3>
+                    </div>
+                </div>
+
+            </section>
+
+            <section class="content-card">
+
+                <div class="section-header">
+                    <div>
+                        <h2>Recent Complaints</h2>
+                        <p>Your latest submitted complaints</p>
+                    </div>
+
+                    <a href="{{ url_for('my_complaints') }}">View All</a>
+                </div>
+
+                {% if recent_complaints %}
+
+                <div class="complaints-table-wrapper">
+                    <table class="complaints-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Complaint</th>
+                                <th>Category</th>
+                                <th>Priority</th>
+                                <th>Status</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            {% for complaint in recent_complaints %}
+                            <tr>
+                                <td>#{{ complaint.complaint_id }}</td>
+
+                                <td>
+                                    <strong>{{ complaint.title }}</strong>
+                                    <span class="complaint-description">
+                                        {{ complaint.description }}
+                                    </span>
+                                </td>
+
+                                <td>{{ complaint.category_name }}</td>
+
+                                <td>
+                                    <span class="priority priority-{{ complaint.priority|lower }}">
+                                        {{ complaint.priority }}
+                                    </span>
+                                </td>
+
+                                <td>
+                                    <span class="status status-{{ complaint.status|lower|replace(' ', '-') }}">
+                                        {{ complaint.status }}
+                                    </span>
+                                </td>
+
+                                <td>
+                                    {{ complaint.created_at.strftime('%d %b %Y') }}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                {% else %}
+
+                <div class="empty-state">
+                    <div class="empty-icon">📭</div>
+                    <h3>No complaints yet</h3>
+                    <p>You haven't submitted any complaints.</p>
+
+                    <a href="{{ url_for('new_complaint') }}" class="secondary-btn">
+                        Submit Your First Complaint
+                    </a>
+                </div>
+
+                {% endif %}
+
+            </section>
+
+        </main>
+    </div>
+
+</body>
+
+</html>
