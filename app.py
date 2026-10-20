@@ -3,8 +3,11 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from dotenv import load_dotenv
 import mysql.connector
 import os
+from pathlib import Path
 
-load_dotenv()
+# Load this project's .env even when Flask is launched from another directory.
+PROJECT_DIR = Path(__file__).resolve().parent
+load_dotenv(dotenv_path=PROJECT_DIR / ".env")
 
 app = Flask(__name__, template_folder="templates")
 
@@ -17,8 +20,16 @@ app.secret_key = os.getenv("FLASK_SECRET_KEY")
 # ==========================================
 
 def get_db_connection():
+    required = ("DB_HOST", "DB_USER", "DB_PASSWORD", "DB_NAME")
+    missing = [key for key in required if not os.getenv(key)]
+    if missing:
+        raise RuntimeError(
+            "Missing database configuration: " + ", ".join(missing)
+        )
+
     return mysql.connector.connect(
         host=os.getenv("DB_HOST"),
+        port=int(os.getenv("DB_PORT", "3306")),
         user=os.getenv("DB_USER"),
         password=os.getenv("DB_PASSWORD"),
         database=os.getenv("DB_NAME")
@@ -62,18 +73,14 @@ def register():
             cursor = db.cursor()
 
             query = """
-                INSERT INTO Users (name, email, password, role)
+                INSERT INTO users (name, email, password, role)
                 VALUES (%s, %s, %s, 'student')
             """
 
             cursor.execute(query, (name, email, hashed_password))
             db.commit()
 
-            return """
-                <h2>Registration Successful!</h2>
-                <p>Your student account has been created.</p>
-                <a href="/login">Go to Login</a>
-            """
+            return redirect(url_for("login"))
 
         except mysql.connector.IntegrityError:
             return """
@@ -113,7 +120,7 @@ def login():
             cursor = db.cursor(dictionary=True)
 
             cursor.execute(
-                "SELECT * FROM Users WHERE email = %s",
+                "SELECT * FROM users WHERE email = %s",
                 (email,)
             )
             user = cursor.fetchone()
@@ -136,7 +143,7 @@ def login():
 
                         cursor.execute(
                             """
-                            UPDATE Users
+                            UPDATE users
                             SET password = %s
                             WHERE user_id = %s
                             """,
@@ -158,7 +165,8 @@ def login():
 
             return redirect(url_for("dashboard"))
 
-        except mysql.connector.Error:
+        except (mysql.connector.Error, RuntimeError):
+            app.logger.exception("Database error during login")
             return "Database error during login. Check your database connection.", 500
 
         finally:
@@ -203,10 +211,10 @@ def admin_dashboard():
                 u.name AS student_name,
                 u.email AS student_email,
                 cat.category_name
-            FROM Complaints c
-            JOIN Users u
+            FROM complaints c
+            JOIN users u
                 ON c.user_id = u.user_id
-            JOIN Categories cat
+            JOIN categories cat
                 ON c.category_id = cat.category_id
             ORDER BY c.created_at DESC
         """
@@ -264,7 +272,7 @@ def update_complaint(complaint_id):
 
         # Update complaint's current status
         update_query = """
-            UPDATE Complaints
+            UPDATE complaints
             SET status = %s,
                 updated_at = CURRENT_TIMESTAMP
             WHERE complaint_id = %s
@@ -342,7 +350,7 @@ def dashboard():
                 SUM(status = 'Pending') AS pending,
                 SUM(status = 'In Progress') AS in_progress,
                 SUM(status = 'Resolved') AS resolved
-            FROM Complaints
+            FROM complaints
             WHERE user_id = %s
             """,
             (student_id,)
@@ -366,8 +374,8 @@ def dashboard():
                 c.status,
                 c.created_at,
                 cat.category_name
-            FROM Complaints c
-            JOIN Categories cat
+            FROM complaints c
+            JOIN categories cat
                 ON c.category_id = cat.category_id
             WHERE c.user_id = %s
             ORDER BY c.created_at DESC
@@ -430,7 +438,7 @@ def new_complaint():
                 return "Invalid priority.", 400
 
             query = """
-                INSERT INTO Complaints
+                INSERT INTO complaints
                     (user_id, category_id, title, description, priority)
                 VALUES (%s, %s, %s, %s, %s)
             """
@@ -449,7 +457,7 @@ def new_complaint():
             db.commit()
             return redirect(url_for("dashboard"))
 
-        cursor.execute("SELECT * FROM Categories ORDER BY category_name")
+        cursor.execute("SELECT * FROM categories ORDER BY category_name")
         categories = cursor.fetchall()
 
         return render_template(
@@ -502,8 +510,8 @@ def my_complaints():
                     ORDER BY cu.updated_at DESC
                     LIMIT 1
                 ) AS admin_remark
-            FROM Complaints c
-            JOIN Categories cat
+            FROM complaints c
+            JOIN categories cat
                 ON c.category_id = cat.category_id
             WHERE c.user_id = %s
             ORDER BY c.created_at DESC

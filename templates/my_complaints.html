@@ -1,317 +1,59 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html" %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% block title %}My complaints | Smart Campus{% endblock %}
 
-    <title>My Complaints | Smart Campus</title>
+{% block content %}
+<header class="page-header">
+    <div>
+        <p class="eyebrow">STUDENT PORTAL</p>
+        <h1>My complaints</h1>
+        <p class="page-lead">Follow the progress of your campus requests and read administrator updates.</p>
+    </div>
+    <a class="button button-primary" href="{{ url_for('new_complaint') }}">＋ New complaint</a>
+</header>
 
-    <link rel="stylesheet"
-          href="{{ url_for('static', filename='css/style.css') }}">
-</head>
-
-<body>
-
-<div class="dashboard">
-
-    <!-- =========================
-         SIDEBAR
-    ========================== -->
-
-    <aside class="sidebar">
-
-        <div class="brand">
-
-            <div class="brand-logo">
-                SC
-            </div>
-
-            <span>
-                Smart Campus
-            </span>
-
+<section class="panel">
+    <div class="panel-heading">
+        <div>
+            <h2>Complaint history</h2>
+            <p>{{ complaints|length }} request{% if complaints|length != 1 %}s{% endif %} submitted</p>
         </div>
-
-
-        <nav>
-
-            <a href="/dashboard">
-                🏠 Dashboard
-            </a>
-
-            <a href="/complaints" class="active">
-                📝 My Complaints
-            </a>
-
-            <a href="/complaint/new">
-                ➕ New Complaint
-            </a>
-
-        </nav>
-
-
-        <a href="/logout" class="logout">
-            🚪 Logout
-        </a>
-
-    </aside>
-
-
-
-    <!-- =========================
-         MAIN CONTENT
-    ========================== -->
-
-    <main class="main-content">
-
-
-        <!-- Topbar -->
-
-        <header class="topbar">
-
-            <div>
-
-                <h1>
-                    My Complaints
-                </h1>
-
-                <p>
-                    Track your submitted complaints and their updates.
-                </p>
-
-            </div>
-
-
-            <div class="profile">
-
-                <div class="profile-avatar">
-                    {{ session["student_name"][0]|upper }}
-                </div>
-
+    </div>
+    {% if complaints %}
+    <div class="complaint-list">
+        {% for complaint in complaints %}
+        <article class="complaint-card">
+            <div class="complaint-card-heading">
                 <div>
-
-                    <strong>
-                        {{ session["student_name"] }}
-                    </strong>
-
-                    <small>
-                        Student
-                    </small>
-
+                    <span class="record-id">COMPLAINT #{{ complaint.complaint_id }}</span>
+                    <h3>{{ complaint.title }}</h3>
                 </div>
-
+                <span class="status-badge status-{{ complaint.status|lower|replace(' ', '-') }}">{{ complaint.status }}</span>
             </div>
-
-        </header>
-
-
-
-        <!-- =========================
-             COMPLAINTS
-        ========================== -->
-
-        <section class="content-card">
-
-
-            <div class="section-header">
-
-                <div>
-
-                    <h2>
-                        Complaint History
-                    </h2>
-
-                    <p>
-                        View the latest status and admin response.
-                    </p>
-
-                </div>
-
-
-                <a href="/complaint/new"
-                   class="secondary-btn">
-                    + New Complaint
-                </a>
-
+            <p class="complaint-body">{{ complaint.description }}</p>
+            <dl class="detail-grid">
+                <div><dt>Category</dt><dd>{{ complaint.category_name }}</dd></div>
+                <div><dt>Priority</dt><dd><span class="priority-label priority-{{ complaint.priority|lower }}">{{ complaint.priority }}</span></dd></div>
+                <div><dt>Submitted</dt><dd>{{ complaint.created_at.strftime('%d %b %Y') }}</dd></div>
+            </dl>
+            <div class="admin-response">
+                <h4>Administrator response</h4>
+                {% if complaint.admin_remark %}
+                <p>{{ complaint.admin_remark }}</p>
+                {% else %}
+                <p class="muted-copy">No response has been added yet.</p>
+                {% endif %}
             </div>
-
-
-
-            {% if complaints %}
-
-
-            <div class="student-complaints">
-
-
-                {% for complaint in complaints %}
-
-
-                <div class="student-complaint-card">
-
-
-                    <!-- Header -->
-
-                    <div class="student-complaint-header">
-
-                        <div>
-
-                            <span class="complaint-id">
-                                Complaint #{{ complaint.complaint_id }}
-                            </span>
-
-                            <h3>
-                                {{ complaint.title }}
-                            </h3>
-
-                        </div>
-
-
-                        <span class="status
-                        status-{{ complaint.status|lower|replace(' ', '-') }}">
-
-                            {{ complaint.status }}
-
-                        </span>
-
-                    </div>
-
-
-
-                    <!-- Description -->
-
-                    <p class="student-description">
-
-                        {{ complaint.description }}
-
-                    </p>
-
-
-
-                    <!-- Details -->
-
-                    <div class="complaint-details">
-
-
-                        <div>
-
-                            <span>
-                                Category
-                            </span>
-
-                            <strong>
-                                {{ complaint.category_name }}
-                            </strong>
-
-                        </div>
-
-
-                        <div>
-
-                            <span>
-                                Priority
-                            </span>
-
-                            <strong>
-                                {{ complaint.priority }}
-                            </strong>
-
-                        </div>
-
-
-                        <div>
-
-                            <span>
-                                Submitted
-                            </span>
-
-                            <strong>
-                                {{ complaint.created_at.strftime('%d %b %Y') }}
-                            </strong>
-
-                        </div>
-
-
-                    </div>
-
-
-
-                    <!-- Admin Remark -->
-
-                    <div class="admin-remark">
-
-                        <strong>
-                            💬 Admin Response
-                        </strong>
-
-
-                        {% if complaint.admin_remark %}
-
-                            <p>
-                                {{ complaint.admin_remark }}
-                            </p>
-
-                        {% else %}
-
-                            <p class="no-remark">
-                                No response from admin yet.
-                            </p>
-
-                        {% endif %}
-
-                    </div>
-
-
-                </div>
-
-
-                {% endfor %}
-
-
-            </div>
-
-
-            {% else %}
-
-
-            <!-- Empty State -->
-
-            <div class="empty-state">
-
-                <div class="empty-icon">
-                    📭
-                </div>
-
-                <h3>
-                    No complaints yet
-                </h3>
-
-                <p>
-                    You haven't submitted any complaints.
-                </p>
-
-
-                <a href="/complaint/new"
-                   class="secondary-btn">
-
-                    Submit Your First Complaint
-
-                </a>
-
-            </div>
-
-
-            {% endif %}
-
-
-        </section>
-
-
-    </main>
-
-</div>
-
-
-</body>
-
-</html>
+        </article>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty-state">
+        <span class="empty-mark" aria-hidden="true">—</span>
+        <h3>No complaints yet</h3>
+        <p>Your submitted requests and their status updates will be listed here.</p>
+        <a class="button button-secondary" href="{{ url_for('new_complaint') }}">Submit your first complaint</a>
+    </div>
+    {% endif %}
+</section>
+{% endblock %}

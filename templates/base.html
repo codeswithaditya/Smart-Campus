@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f7f6f2">
+    <title>{% block title %}Smart Campus{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="{% block body_class %}{% endblock %}">
+    {% if session.get("student_id") %}
+    <div class="app-layout">
+        <aside class="sidebar">
+            <a class="brand" href="{{ url_for('admin_dashboard') if session.get('role') == 'admin' else url_for('dashboard') }}">
+                <span class="brand-mark" aria-hidden="true">SC</span>
+                <span class="brand-name">Smart Campus<small>Campus services</small></span>
+            </a>
+            <div class="nav-label">Workspace</div>
+            <nav class="side-nav" aria-label="Main navigation">
+                {% if session.get("role") == "admin" %}
+                <a class="nav-link {% if request.endpoint == 'admin_dashboard' %}active{% endif %}" href="{{ url_for('admin_dashboard') }}">
+                    <span class="nav-icon" aria-hidden="true">▦</span> Admin dashboard
+                </a>
+                <a class="nav-link" href="{{ url_for('admin_dashboard') }}#complaints">
+                    <span class="nav-icon" aria-hidden="true">≡</span> All complaints
+                </a>
+                {% else %}
+                <a class="nav-link {% if request.endpoint == 'dashboard' %}active{% endif %}" href="{{ url_for('dashboard') }}">
+                    <span class="nav-icon" aria-hidden="true">⌂</span> Dashboard
+                </a>
+                <a class="nav-link {% if request.endpoint == 'my_complaints' %}active{% endif %}" href="{{ url_for('my_complaints') }}">
+                    <span class="nav-icon" aria-hidden="true">≡</span> My complaints
+                </a>
+                <a class="nav-link {% if request.endpoint == 'new_complaint' %}active{% endif %}" href="{{ url_for('new_complaint') }}">
+                    <span class="nav-icon" aria-hidden="true">＋</span> New complaint
+                </a>
+                {% endif %}
+            </nav>
+            <div class="sidebar-footer">
+                <div class="sidebar-user">
+                    <span class="avatar">{{ (session.get("student_name", "U") or "U")[0]|upper }}</span>
+                    <span class="sidebar-user-name">{{ session.get("student_name", "User") }}<small>{{ session.get("role", "student")|title }}</small></span>
+                </div>
+                <a class="logout-link" href="{{ url_for('logout') }}">Sign out <span aria-hidden="true">↗</span></a>
+            </div>
+        </aside>
+        <div class="main-column">
+            <header class="mobile-header">
+                <a class="brand" href="{{ url_for('admin_dashboard') if session.get('role') == 'admin' else url_for('dashboard') }}">
+                    <span class="brand-mark" aria-hidden="true">SC</span>
+                    <span class="brand-name">Smart Campus</span>
+                </a>
+                <a class="mobile-signout" href="{{ url_for('logout') }}">Sign out</a>
+                <nav class="mobile-nav" aria-label="Main navigation">
+                    {% if session.get("role") == "admin" %}
+                    <a href="{{ url_for('admin_dashboard') }}">Dashboard</a>
+                    <a href="{{ url_for('admin_dashboard') }}#complaints">All complaints</a>
+                    {% else %}
+                    <a href="{{ url_for('dashboard') }}">Dashboard</a>
+                    <a href="{{ url_for('my_complaints') }}">My complaints</a>
+                    <a href="{{ url_for('new_complaint') }}">New complaint</a>
+                    {% endif %}
+                </nav>
+            </header>
+            <main class="page-content">
+                {% block content %}{% endblock %}
+            </main>
+            <footer class="site-footer">Smart Campus <span>·</span> A better-connected campus</footer>
+        </div>
+    </div>
+    {% else %}
+    <div class="auth-layout">
+        <header class="auth-header">
+            <a class="brand" href="{{ url_for('login') }}">
+                <span class="brand-mark" aria-hidden="true">SC</span>
+                <span class="brand-name">Smart Campus<small>Campus services</small></span>
+            </a>
+        </header>
+        <main class="auth-main">
+            {% block auth_content %}{% endblock %}
+        </main>
+        <footer class="auth-footer">Smart Campus <span>·</span> A better-connected campus</footer>
+    </div>
+    {% endif %}
+</body>
+</html>

@@ -1,446 +1,78 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html" %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% block title %}Admin dashboard | Smart Campus{% endblock %}
 
-    <title>Admin Dashboard | Smart Campus</title>
+{% block content %}
+<header class="page-header">
+    <div>
+        <p class="eyebrow">ADMINISTRATION</p>
+        <h1>Admin dashboard</h1>
+        <p class="page-lead">Review student requests, update their status, and share a response.</p>
+    </div>
+    <a class="button button-secondary" href="#complaints">View all complaints <span aria-hidden="true">↓</span></a>
+</header>
 
-    <link rel="stylesheet"
-          href="{{ url_for('static', filename='css/style.css') }}">
-</head>
+<section class="admin-summary">
+    <div>
+        <span class="summary-label">All student requests</span>
+        <strong>{{ complaints|length }}</strong>
+        <span class="summary-note">complaint{% if complaints|length != 1 %}s{% endif %} on record</span>
+    </div>
+    <p>Use the action controls in each row to update a complaint and leave a note for the student.</p>
+</section>
 
-<body>
-
-<div class="dashboard">
-
-    <!-- =========================
-         SIDEBAR
-    ========================== -->
-
-    <aside class="sidebar">
-
-        <div class="brand">
-            <div class="brand-logo">SC</div>
-            <span>Smart Campus</span>
+<section class="panel" id="complaints">
+    <div class="panel-heading">
+        <div>
+            <h2>All complaints</h2>
+            <p>Newest requests appear first</p>
         </div>
-
-        <nav>
-
-            <a href="/admin/dashboard" class="active">
-                📊 Admin Dashboard
-            </a>
-
-            <a href="/admin/dashboard">
-                📋 All Complaints
-            </a>
-
-        </nav>
-
-        <a href="/logout" class="logout">
-            🚪 Logout
-        </a>
-
-    </aside>
-
-
-    <!-- =========================
-         MAIN CONTENT
-    ========================== -->
-
-    <main class="main-content">
-
-
-        <!-- Topbar -->
-
-        <header class="topbar">
-
-            <div>
-
-                <h1>Admin Dashboard</h1>
-
-                <p>
-                    Manage student complaints and campus services.
-                </p>
-
-            </div>
-
-
-            <div class="profile">
-
-                <div class="profile-avatar">
-                    A
-                </div>
-
-                <div>
-
-                    <strong>
-                        Administrator
-                    </strong>
-
-                    <small>
-                        Admin
-                    </small>
-
-                </div>
-
-            </div>
-
-        </header>
-
-
-
-        <!-- =========================
-             WELCOME CARD
-        ========================== -->
-
-        <section class="welcome-card">
-
-            <div>
-
-                <p class="welcome-small">
-                    Welcome back 👋
-                </p>
-
-                <h2>
-                    Campus Administration
-                </h2>
-
-                <p>
-                    Review and manage student complaints from one place.
-                </p>
-
-            </div>
-
-
-            <div class="welcome-icon">
-                🏫
-            </div>
-
-        </section>
-
-
-
-        <!-- =========================
-             COMPLAINTS SECTION
-        ========================== -->
-
-        <section class="content-card">
-
-
-            <div class="section-header">
-
-                <div>
-
-                    <h2>
-                        All Student Complaints
-                    </h2>
-
-                    <p>
-                        Review and manage complaints submitted by students.
-                    </p>
-
-                </div>
-
-
-                <span class="admin-count">
-
-                    {{ complaints|length }} Complaints
-
-                </span>
-
-            </div>
-
-
-
-            {% if complaints %}
-
-
-            <!-- Complaints Table -->
-
-            <div class="complaints-table-wrapper">
-
-                <table class="complaints-table">
-
-
-                    <!-- TABLE HEADER -->
-
-                    <thead>
-
-                        <tr>
-
-                            <th>
-                                ID
-                            </th>
-
-                            <th>
-                                Student
-                            </th>
-
-                            <th>
-                                Complaint
-                            </th>
-
-                            <th>
-                                Category
-                            </th>
-
-                            <th>
-                                Priority
-                            </th>
-
-                            <th>
-                                Status
-                            </th>
-
-                            <th>
-                                Date
-                            </th>
-
-                            <th>
-                                Action
-                            </th>
-
-                        </tr>
-
-                    </thead>
-
-
-
-                    <!-- TABLE BODY -->
-
-                    <tbody>
-
-
-                    {% for complaint in complaints %}
-
-
-                        <tr>
-
-
-                            <!-- Complaint ID -->
-
-                            <td>
-
-                                #{{ complaint.complaint_id }}
-
-                            </td>
-
-
-
-                            <!-- Student -->
-
-                            <td>
-
-                                <strong>
-                                    {{ complaint.student_name }}
-                                </strong>
-
-                                <span class="complaint-description">
-
-                                    {{ complaint.student_email }}
-
-                                </span>
-
-                            </td>
-
-
-
-                            <!-- Complaint -->
-
-                            <td>
-
-                                <strong>
-                                    {{ complaint.title }}
-                                </strong>
-
-                                <span class="complaint-description">
-
-                                    {{ complaint.description }}
-
-                                </span>
-
-                            </td>
-
-
-
-                            <!-- Category -->
-
-                            <td>
-
-                                {{ complaint.category_name }}
-
-                            </td>
-
-
-
-                            <!-- Priority -->
-
-                            <td>
-
-                                <span class="priority
-                                priority-{{ complaint.priority|lower }}">
-
-                                    {{ complaint.priority }}
-
-                                </span>
-
-                            </td>
-
-
-
-                            <!-- Status -->
-
-                            <td>
-
-                                <span class="status
-                                status-{{ complaint.status|lower|replace(' ', '-') }}">
-
-                                    {{ complaint.status }}
-
-                                </span>
-
-                            </td>
-
-
-
-                            <!-- Date -->
-
-                            <td>
-
-                                {{ complaint.created_at.strftime('%d %b %Y') }}
-
-                            </td>
-
-
-
-                            <!-- ACTION -->
-
-                            <td>
-
-                                <form
-                                    method="POST"
-                                    action="/admin/complaint/update/{{ complaint.complaint_id }}"
-                                    class="admin-update-form"
-                                >
-
-
-                                    <!-- Status -->
-
-                                    <select
-                                        name="status"
-                                        required
-                                    >
-
-                                        <option
-                                            value="Pending"
-                                            {% if complaint.status == "Pending" %}
-                                            selected
-                                            {% endif %}
-                                        >
-                                            Pending
-                                        </option>
-
-
-                                        <option
-                                            value="In Progress"
-                                            {% if complaint.status == "In Progress" %}
-                                            selected
-                                            {% endif %}
-                                        >
-                                            In Progress
-                                        </option>
-
-
-                                        <option
-                                            value="Resolved"
-                                            {% if complaint.status == "Resolved" %}
-                                            selected
-                                            {% endif %}
-                                        >
-                                            Resolved
-                                        </option>
-
-                                    </select>
-
-
-
-                                    <!-- Admin Remark -->
-
-                                    <input
-                                        type="text"
-                                        name="remark"
-                                        placeholder="Add remark..."
-                                        required
-                                    >
-
-
-
-                                    <!-- Update Button -->
-
-                                    <button
-                                        type="submit"
-                                        class="update-btn"
-                                    >
-                                        Update
-                                    </button>
-
-
-                                </form>
-
-                            </td>
-
-
-                        </tr>
-
-
-                    {% endfor %}
-
-
-                    </tbody>
-
-                </table>
-
-            </div>
-
-
-            {% else %}
-
-
-            <!-- =========================
-                 EMPTY STATE
-            ========================== -->
-
-            <div class="empty-state">
-
-                <div class="empty-icon">
-                    📭
-                </div>
-
-                <h3>
-                    No complaints found
-                </h3>
-
-                <p>
-                    There are currently no student complaints.
-                </p>
-
-            </div>
-
-
-            {% endif %}
-
-
-        </section>
-
-
-    </main>
-
-
-</div>
-
-
-</body>
-
-</html>
+        <span class="count-chip">{{ complaints|length }} total</span>
+    </div>
+    {% if complaints %}
+    <div class="table-scroll">
+        <table class="data-table admin-table">
+            <thead>
+                <tr><th>Student</th><th>Complaint</th><th>Priority</th><th>Status</th><th>Submitted</th><th>Update complaint</th></tr>
+            </thead>
+            <tbody>
+                {% for complaint in complaints %}
+                <tr>
+                    <td>
+                        <span class="table-primary">{{ complaint.student_name }}</span>
+                        <span class="table-secondary">{{ complaint.student_email }}</span>
+                    </td>
+                    <td>
+                        <span class="table-primary">#{{ complaint.complaint_id }} · {{ complaint.title }}</span>
+                        <span class="table-secondary">{{ complaint.category_name }} · {{ complaint.description }}</span>
+                    </td>
+                    <td><span class="priority-label priority-{{ complaint.priority|lower }}">{{ complaint.priority }}</span></td>
+                    <td><span class="status-badge status-{{ complaint.status|lower|replace(' ', '-') }}">{{ complaint.status }}</span></td>
+                    <td>{{ complaint.created_at.strftime('%d %b %Y') }}</td>
+                    <td>
+                        <form method="POST" action="{{ url_for('update_complaint', complaint_id=complaint.complaint_id) }}" class="admin-update-form">
+                            <label class="visually-hidden" for="status-{{ complaint.complaint_id }}">Status for complaint {{ complaint.complaint_id }}</label>
+                            <select id="status-{{ complaint.complaint_id }}" name="status" required>
+                                <option value="Pending" {% if complaint.status == "Pending" %}selected{% endif %}>Pending</option>
+                                <option value="In Progress" {% if complaint.status == "In Progress" %}selected{% endif %}>In Progress</option>
+                                <option value="Resolved" {% if complaint.status == "Resolved" %}selected{% endif %}>Resolved</option>
+                            </select>
+                            <label class="visually-hidden" for="remark-{{ complaint.complaint_id }}">Administrator response for complaint {{ complaint.complaint_id }}</label>
+                            <input id="remark-{{ complaint.complaint_id }}" type="text" name="remark" placeholder="Add response" required>
+                            <button type="submit" class="button button-small button-primary">Save update</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="empty-state">
+        <span class="empty-mark" aria-hidden="true">—</span>
+        <h3>No complaints found</h3>
+        <p>New student requests will appear here for review.</p>
+    </div>
+    {% endif %}
+</section>
+{% endblock %}
